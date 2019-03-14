@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using System.Linq;
 namespace Puzzles
 {
     class Program
@@ -15,6 +16,13 @@ namespace Puzzles
         {
             return x+y;
         }
+
+        public static bool  Anagram(string x, string y)
+        {
+            var charsA = x.ToLower().ToArray().Where(c => c >= 'a' && c <= 'z');
+            var charsB = y.ToLower().ToArray().Where(c => c >= 'a' && c <= 'z');
+            return charsA.OrderBy(c => c).SequenceEqual(charsB.OrderBy(c => c));
+        }
     }
 
     [TestFixture]
@@ -25,8 +33,17 @@ namespace Puzzles
         [TestCase(10, -2, 8)]
     public void TestAddition(int x,int y, int z)
     {
-    var Results = Program.AddInt(x,y);
-    Assert.AreEqual(z,Results);
+             var Results = Program.AddInt(x,y);
+             Assert.AreEqual(z,Results);
+
+    }
+
+        [TestCase("rail safety", "fairy tales", true)]
+       
+     public void TestAnagram(string x,string y, bool z)
+    {
+             var Results = Program.Anagram(x,y);
+             Assert.AreEqual(z,Results);
 
     }
 }
